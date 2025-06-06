@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useCallback, useState, useEffect } from 'react';
 import useDiff from '../hooks/useDiff';
 import useDebounce from '../hooks/useDebounce';
+import useLocalStorage from '../hooks/useLocalStorage';
 import type { DiffResult, DiffStatistics, ComparisonMode } from '../types/diff';
 
 interface DiffContextType {
@@ -37,8 +38,13 @@ export function DiffProvider({ children }: DiffProviderProps) {
   // 기본 상태
   const [originalText, setOriginalText] = useState('');
   const [modifiedText, setModifiedText] = useState('');
-  const [comparisonMode, setComparisonMode] = useState<ComparisonMode>('character');
+  const [comparisonMode, setComparisonModeState] = useLocalStorage<ComparisonMode>('textdiff-comparison-mode', 'word');
   const [isCalculating, setIsCalculating] = useState(false);
+
+  // 비교 모드 변경 함수 (localStorage에 자동 저장)
+  const setComparisonMode = useCallback((mode: ComparisonMode) => {
+    setComparisonModeState(mode);
+  }, [setComparisonModeState]);
 
   // 디바운스된 텍스트 (성능 최적화)
   const debouncedOriginalText = useDebounce(originalText, 300);

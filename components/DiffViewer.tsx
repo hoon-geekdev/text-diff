@@ -12,7 +12,7 @@ interface DiffViewerProps {
 export default function DiffViewer({ diffs, title, className = '' }: DiffViewerProps) {
   if (!diffs.length) {
     return (
-      <div className={`min-h-[300px] flex items-center justify-center text-gray-500 ${className}`}>
+      <div className={`min-h-[300px] flex items-center justify-center text-gray-500 dark:text-gray-400 ${className}`}>
         <div className="text-center">
           <p className="text-lg mb-2">{title}</p>
           <p className="text-sm">텍스트를 입력하면 비교 결과가 여기에 표시됩니다</p>
@@ -32,7 +32,7 @@ export default function DiffViewer({ diffs, title, className = '' }: DiffViewerP
         return (
           <span
             key={index}
-            className="bg-green-100 text-green-800 transition-colors duration-200 hover:bg-green-200"
+            className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 transition-colors duration-200 hover:bg-green-200 dark:hover:bg-green-900/50"
             style={{ wordBreak: 'break-word' }}
             aria-label="추가된 텍스트"
             title="추가된 텍스트"
@@ -45,7 +45,7 @@ export default function DiffViewer({ diffs, title, className = '' }: DiffViewerP
         return (
           <span
             key={index}
-            className="bg-red-100 text-red-800 line-through transition-colors duration-200 hover:bg-red-200"
+            className="bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 line-through transition-colors duration-200 hover:bg-red-200 dark:hover:bg-red-900/50"
             style={{ wordBreak: 'break-word' }}
             aria-label="삭제된 텍스트"
             title="삭제된 텍스트"
@@ -59,7 +59,7 @@ export default function DiffViewer({ diffs, title, className = '' }: DiffViewerP
         return (
           <span
             key={index}
-            className="text-gray-700"
+            className="text-gray-700 dark:text-gray-300"
             style={{ wordBreak: 'break-word' }}
           >
             {preservedText}
@@ -71,10 +71,10 @@ export default function DiffViewer({ diffs, title, className = '' }: DiffViewerP
   return (
     <div className={`${className}`}>
       <div className="mb-3">
-        <h3 className="text-sm font-medium text-gray-700">{title}</h3>
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">{title}</h3>
       </div>
       <div 
-        className="p-4 border rounded-lg bg-white min-h-[300px] whitespace-pre-wrap font-mono text-sm leading-relaxed"
+        className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 min-h-[300px] whitespace-pre-wrap font-mono text-sm leading-relaxed"
         style={{ 
           wordBreak: 'break-word',
           overflowWrap: 'break-word',
@@ -88,17 +88,17 @@ export default function DiffViewer({ diffs, title, className = '' }: DiffViewerP
       </div>
       
       {/* 범례 */}
-      <div className="mt-3 flex flex-wrap gap-4 text-xs text-gray-600">
+      <div className="mt-3 flex flex-wrap gap-4 text-xs text-gray-600 dark:text-gray-400">
         <div className="flex items-center gap-1">
-          <span className="inline-block w-3 h-3 bg-green-100 border border-green-200 rounded"></span>
+          <span className="inline-block w-3 h-3 bg-green-100 dark:bg-green-900/30 border border-green-200 dark:border-green-700 rounded"></span>
           <span>추가</span>
         </div>
         <div className="flex items-center gap-1">
-          <span className="inline-block w-3 h-3 bg-red-100 border border-red-200 rounded"></span>
+          <span className="inline-block w-3 h-3 bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded"></span>
           <span>삭제</span>
         </div>
         <div className="flex items-center gap-1">
-          <span className="inline-block w-3 h-3 bg-gray-100 border border-gray-200 rounded"></span>
+          <span className="inline-block w-3 h-3 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded"></span>
           <span>변경 없음</span>
         </div>
       </div>

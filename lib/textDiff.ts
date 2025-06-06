@@ -9,6 +9,10 @@ dmp.Diff_EditCost = 4; // 편집 비용
 // 타입들을 다시 export (편의를 위해)
 export type { DiffResult, DiffStatistics, ComparisonMode };
 
+
+
+
+
 /**
  * 두 텍스트를 비교하여 차이점을 계산합니다
  */
@@ -18,10 +22,20 @@ export function calculateDiff(text1: string, text2: string, mode: ComparisonMode
 
     switch (mode) {
       case 'word':
-        diffs = dmp.diff_main(text1, text2);
+        // 단어 레벨 비교 - 간단한 토큰 기반 접근
+        const words1 = text1.split(/(\s+)/);
+        const words2 = text2.split(/(\s+)/);
+        const wordText1 = words1.join('\n');
+        const wordText2 = words2.join('\n');
+        const wordLineArray = dmp.diff_linesToChars_(wordText1, wordText2);
+        diffs = dmp.diff_main(wordLineArray.chars1, wordLineArray.chars2, false);
+        dmp.diff_charsToLines_(diffs, wordLineArray.lineArray);
         dmp.diff_cleanupSemantic(diffs);
+        // 줄바꿈을 다시 공백으로 변환
+        diffs = diffs.map(([op, text]) => [op, text.replace(/\n/g, '')]);
         break;
       case 'line':
+        // 줄 레벨 비교
         const lineArray1 = dmp.diff_linesToChars_(text1, text2);
         diffs = dmp.diff_main(lineArray1.chars1, lineArray1.chars2, false);
         dmp.diff_charsToLines_(diffs, lineArray1.lineArray);
@@ -29,6 +43,7 @@ export function calculateDiff(text1: string, text2: string, mode: ComparisonMode
         break;
       case 'character':
       default:
+        // 문자 레벨 비교 (기본)
         diffs = dmp.diff_main(text1, text2);
         dmp.diff_cleanupSemantic(diffs);
         break;
@@ -139,4 +154,6 @@ export function handleEmptyTexts(text1: string, text2: string): DiffResult[] | n
     return [{ operation: 'delete', text: text1 }];
   }
   return null; // 둘 다 비어있지 않음
-} 
+}
+
+ 

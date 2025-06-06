@@ -3,6 +3,7 @@
 import Container from '../components/ui/Container';
 import TextInputArea from '../components/TextInputArea';
 import DiffViewer from '../components/DiffViewer';
+import ComparisonModeSelector from '../components/ComparisonModeSelector';
 import { useDiffContext } from '../context/DiffContext';
 
 export default function Home() {
@@ -15,6 +16,8 @@ export default function Home() {
     error,
     statistics,
     diffs,
+    comparisonMode,
+    setComparisonMode,
   } = useDiffContext();
 
   return (
@@ -22,17 +25,17 @@ export default function Home() {
       <div className="space-y-6">
         {/* Header Section */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             텍스트 비교하기
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-300">
             두 텍스트를 입력하여 차이점을 실시간으로 확인하세요
           </p>
         </div>
 
         {/* Text Input Areas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[500px]">
-          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm p-6">
             <TextInputArea
               label="원본 텍스트"
               value={originalText}
@@ -41,7 +44,7 @@ export default function Home() {
             />
           </div>
           
-          <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm p-6">
             <TextInputArea
               label="수정된 텍스트"
               value={modifiedText}
@@ -53,33 +56,40 @@ export default function Home() {
 
         {/* Diff Results */}
         {(originalText || modifiedText) && !error && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <DiffViewer 
-              diffs={diffs} 
-              title="원본 기준 비교 결과" 
-              className=""
-            />
-            <DiffViewer 
-              diffs={diffs} 
-              title="통합된 비교 결과" 
-              className=""
-            />
+          <div className="space-y-4">
+            {/* Comparison Mode Selector Above Results */}
+            <div className="flex justify-center">
+              <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm p-4">
+                <ComparisonModeSelector
+                  currentMode={comparisonMode}
+                  onModeChange={setComparisonMode}
+                />
+              </div>
+            </div>
+            
+            {/* Diff Viewer */}
+            <div className="max-w-6xl mx-auto">
+              <DiffViewer 
+                diffs={diffs} 
+                title="비교 결과" 
+                className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm p-6"
+              />
+            </div>
           </div>
         )}
 
         {/* Status Information */}
-        <div className="text-center text-sm text-gray-500">
+        <div className="text-center text-sm text-gray-500 dark:text-gray-400">
           {error ? (
-            <p className="text-red-600">{error}</p>
+            <p className="text-red-600 dark:text-red-400">{error}</p>
           ) : (originalText || modifiedText) ? (
-            <div className="space-y-2">
+            <div className="space-y-1">
               <p>
-                원본: {originalText.length}글자 | 
-                수정본: {modifiedText.length}글자
-                {isCalculating && <span className="ml-2 text-blue-600">계산 중...</span>}
+                원본: {originalText.length}글자 | 수정본: {modifiedText.length}글자
+                {isCalculating && <span className="ml-2 text-blue-600 dark:text-blue-400">계산 중...</span>}
               </p>
               {!isCalculating && statistics && (
-                <p className="text-xs">
+                <p>
                   추가: {statistics.addedCharacters}글자 | 
                   삭제: {statistics.deletedCharacters}글자 | 
                   변경 없음: {statistics.unchangedCharacters}글자
