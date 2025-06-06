@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky install",
-    "deploy": "gh-pages -d out -t true",
+    "deploy": "gh-pages -d out",
     "build:deploy": "npm run build && npm run deploy"
   },
   "lint-staged": {
