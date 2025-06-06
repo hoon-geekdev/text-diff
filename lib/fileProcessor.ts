@@ -22,6 +22,26 @@ export const SUPPORTED_FILE_TYPES = {
   'text/plain': ['.txt'],
   'text/markdown': ['.md'],
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+  'application/json': ['.json'],
+  'text/csv': ['.csv'],
+  'application/xml': ['.xml'],
+  'text/xml': ['.xml'],
+  'application/x-yaml': ['.yaml', '.yml'],
+  'text/yaml': ['.yaml', '.yml'],
+  'application/javascript': ['.js', '.ts'],
+  'text/javascript': ['.js'],
+  'application/typescript': ['.ts'],
+  'text/css': ['.css'],
+  'text/html': ['.html', '.htm'],
+  'application/sql': ['.sql'],
+  'text/x-python': ['.py'],
+  'application/x-httpd-php': ['.php'],
+  'text/x-java-source': ['.java'],
+  'text/x-csharp': ['.cs'],
+  'text/x-c++src': ['.cpp', '.cc', '.cxx'],
+  'text/x-csrc': ['.c'],
+  'text/x-go': ['.go'],
+  'text/x-rust': ['.rs'],
 } as const;
 
 /**
@@ -83,6 +103,27 @@ export async function extractTextFromFile(file: File): Promise<FileProcessingRes
     switch (fileExtension) {
       case '.txt':
       case '.md':
+      case '.json':
+      case '.csv':
+      case '.xml':
+      case '.yaml':
+      case '.yml':
+      case '.js':
+      case '.ts':
+      case '.css':
+      case '.html':
+      case '.htm':
+      case '.sql':
+      case '.py':
+      case '.php':
+      case '.java':
+      case '.cs':
+      case '.cpp':
+      case '.cc':
+      case '.cxx':
+      case '.c':
+      case '.go':
+      case '.rs':
         extractedText = await extractTextFromTextFile(file);
         break;
       case '.docx':
@@ -186,6 +227,43 @@ export function getFileIcon(fileName: string): string {
       return '📝';
     case '.docx':
       return '📘';
+    case '.json':
+      return '🔧';
+    case '.csv':
+      return '📊';
+    case '.xml':
+      return '🗂️';
+    case '.yaml':
+    case '.yml':
+      return '⚙️';
+    case '.js':
+      return '📜';
+    case '.ts':
+      return '📘';
+    case '.css':
+      return '🎨';
+    case '.html':
+    case '.htm':
+      return '🌐';
+    case '.sql':
+      return '🗃️';
+    case '.py':
+      return '🐍';
+    case '.php':
+      return '🐘';
+    case '.java':
+      return '☕';
+    case '.cs':
+      return '🔷';
+    case '.cpp':
+    case '.cc':
+    case '.cxx':
+    case '.c':
+      return '⚡';
+    case '.go':
+      return '🐹';
+    case '.rs':
+      return '🦀';
     default:
       return '📁';
   }

@@ -22,17 +22,22 @@ export function calculateDiff(text1: string, text2: string, mode: ComparisonMode
 
     switch (mode) {
       case 'word':
-        // 단어 레벨 비교 - 간단한 토큰 기반 접근
+        // 단어 레벨 비교 - 개행 문자 유지
+        // 단어와 공백(개행 포함)을 모두 토큰으로 분리
         const words1 = text1.split(/(\s+)/);
         const words2 = text2.split(/(\s+)/);
-        const wordText1 = words1.join('\n');
-        const wordText2 = words2.join('\n');
+        
+        // 각 토큰에 특수 구분자를 추가하여 구분
+        const wordText1 = words1.map(token => token).join('\u0002');
+        const wordText2 = words2.map(token => token).join('\u0002');
+        
         const wordLineArray = dmp.diff_linesToChars_(wordText1, wordText2);
         diffs = dmp.diff_main(wordLineArray.chars1, wordLineArray.chars2, false);
         dmp.diff_charsToLines_(diffs, wordLineArray.lineArray);
         dmp.diff_cleanupSemantic(diffs);
-        // 줄바꿈을 다시 공백으로 변환
-        diffs = diffs.map(([op, text]) => [op, text.replace(/\n/g, '')]);
+        
+        // 구분자를 제거하여 원본 형태로 복원
+        diffs = diffs.map(([op, text]) => [op, text.replace(/\u0002/g, '')]);
         break;
       case 'line':
         // 줄 레벨 비교 - 개선된 버전

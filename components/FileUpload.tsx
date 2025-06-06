@@ -102,7 +102,7 @@ export default function FileUpload({
         <input
           ref={fileInputRef}
           type="file"
-          accept=".txt,.md,.docx"
+          accept=".txt,.md,.docx,.json,.csv,.xml,.yaml,.yml,.js,.ts,.css,.html,.htm,.sql,.py,.php,.java,.cs,.cpp,.cc,.cxx,.c,.go,.rs"
           onChange={handleInputChange}
           className="sr-only"
           aria-label="파일 선택"
@@ -121,7 +121,7 @@ export default function FileUpload({
                 파일을 드래그하거나 클릭하여 업로드
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                .txt, .md, .docx 파일 지원 (최대 10MB)
+                텍스트, 코드, 문서 파일 지원 (최대 10MB)
               </p>
             </div>
           </div>
@@ -173,15 +173,51 @@ export default function FileUpload({
       {/* 지원되는 파일 형식 안내 */}
       <div className="mt-3 text-xs text-gray-500 dark:text-gray-400">
         <p className="font-medium">지원되는 파일 형식:</p>
-        <div className="flex flex-wrap gap-2 mt-1">
-          <span className="inline-flex items-center px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+        <div className="flex flex-wrap gap-1 mt-1">
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
             📄 .txt
           </span>
-          <span className="inline-flex items-center px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
             📝 .md
           </span>
-          <span className="inline-flex items-center px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
             📘 .docx
+          </span>
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+            🔧 .json
+          </span>
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+            📊 .csv
+          </span>
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+            🗂️ .xml
+          </span>
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+            ⚙️ .yaml
+          </span>
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+            📜 .js/.ts
+          </span>
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+            🎨 .css
+          </span>
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+            🌐 .html
+          </span>
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+            🐍 .py
+          </span>
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+            ☕ .java
+          </span>
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+            ⚡ .cpp/.c
+          </span>
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+            🐹 .go
+          </span>
+          <span className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+            🦀 .rs
           </span>
         </div>
       </div>
