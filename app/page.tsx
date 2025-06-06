@@ -1,17 +1,19 @@
 'use client';
 
-import { useState } from 'react';
 import Container from '../components/ui/Container';
 import TextInputArea from '../components/TextInputArea';
-import useDebounce from '../hooks/useDebounce';
+import { useDiffContext } from '../context/DiffContext';
 
 export default function Home() {
-  const [originalText, setOriginalText] = useState('');
-  const [modifiedText, setModifiedText] = useState('');
-
-  // Debounce the text values for performance optimization
-  const debouncedOriginalText = useDebounce(originalText, 300);
-  const debouncedModifiedText = useDebounce(modifiedText, 300);
+  const {
+    originalText,
+    modifiedText,
+    setOriginalText,
+    setModifiedText,
+    isCalculating,
+    error,
+    statistics,
+  } = useDiffContext();
 
   return (
     <Container className="py-8">
@@ -49,11 +51,23 @@ export default function Home() {
 
         {/* Status Information */}
         <div className="text-center text-sm text-gray-500">
-          {(debouncedOriginalText || debouncedModifiedText) ? (
-            <p>
-              원본: {debouncedOriginalText.length}글자 | 
-              수정본: {debouncedModifiedText.length}글자
-            </p>
+          {error ? (
+            <p className="text-red-600">{error}</p>
+          ) : (originalText || modifiedText) ? (
+            <div className="space-y-2">
+              <p>
+                원본: {originalText.length}글자 | 
+                수정본: {modifiedText.length}글자
+                {isCalculating && <span className="ml-2 text-blue-600">계산 중...</span>}
+              </p>
+              {!isCalculating && statistics && (
+                <p className="text-xs">
+                  추가: {statistics.addedCharacters}글자 | 
+                  삭제: {statistics.deletedCharacters}글자 | 
+                  변경 없음: {statistics.unchangedCharacters}글자
+                </p>
+              )}
+            </div>
           ) : (
             <p>텍스트를 입력하면 실시간으로 비교 결과를 확인할 수 있습니다</p>
           )}
