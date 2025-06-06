@@ -2,6 +2,7 @@
 
 import Container from '../components/ui/Container';
 import TextInputArea from '../components/TextInputArea';
+import DiffViewer from '../components/DiffViewer';
 import { useDiffContext } from '../context/DiffContext';
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
     isCalculating,
     error,
     statistics,
+    diffs,
   } = useDiffContext();
 
   return (
@@ -48,6 +50,22 @@ export default function Home() {
             />
           </div>
         </div>
+
+        {/* Diff Results */}
+        {(originalText || modifiedText) && !error && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <DiffViewer 
+              diffs={diffs} 
+              title="원본 기준 비교 결과" 
+              className=""
+            />
+            <DiffViewer 
+              diffs={diffs} 
+              title="통합된 비교 결과" 
+              className=""
+            />
+          </div>
+        )}
 
         {/* Status Information */}
         <div className="text-center text-sm text-gray-500">
