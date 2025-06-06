@@ -1,6 +1,6 @@
 const nextConfig = { 
   output: "export", 
-  trailingSlash: true, 
+  trailingSlash: false, 
   images: { unoptimized: true }, 
   basePath: process.env.NODE_ENV === 'production' ? '/text-diff' : '', 
   assetPrefix: process.env.NODE_ENV === 'production' ? '/text-diff' : '' 
