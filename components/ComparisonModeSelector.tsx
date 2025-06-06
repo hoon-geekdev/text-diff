@@ -38,16 +38,16 @@ export default function ComparisonModeSelector({
         <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">비교 모드</h3>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-1">
         {modes.map((mode) => (
           <label
             key={mode.value}
             className={`
-              flex items-center px-3 py-2 rounded-md border cursor-pointer transition-all duration-200 text-sm
+              flex items-center px-2 py-1 rounded border cursor-pointer transition-all duration-200 text-xs font-medium
               ${
                 currentMode === mode.value
                   ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
-                  : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300'
+                  : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400'
               }
             `}
           >
@@ -59,7 +59,7 @@ export default function ComparisonModeSelector({
               onChange={() => onModeChange(mode.value)}
               className="sr-only"
             />
-            <span className="font-medium">
+            <span>
               {mode.label}
             </span>
           </label>

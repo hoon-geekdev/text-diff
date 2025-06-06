@@ -35,11 +35,28 @@ export function calculateDiff(text1: string, text2: string, mode: ComparisonMode
         diffs = diffs.map(([op, text]) => [op, text.replace(/\n/g, '')]);
         break;
       case 'line':
-        // 줄 레벨 비교
-        const lineArray1 = dmp.diff_linesToChars_(text1, text2);
-        diffs = dmp.diff_main(lineArray1.chars1, lineArray1.chars2, false);
-        dmp.diff_charsToLines_(diffs, lineArray1.lineArray);
+        // 줄 레벨 비교 - 개선된 버전
+        const lines1 = text1.split('\n');
+        const lines2 = text2.split('\n');
+        
+        // 각 줄에 줄바꿈 문자를 추가하여 원본 형태 유지
+        const linesWithNewlines1 = lines1.map((line, index) => 
+          index === lines1.length - 1 ? line : line + '\n'
+        );
+        const linesWithNewlines2 = lines2.map((line, index) => 
+          index === lines2.length - 1 ? line : line + '\n'
+        );
+        
+        const lineText1 = linesWithNewlines1.join('\u0001'); // 특수 구분자 사용
+        const lineText2 = linesWithNewlines2.join('\u0001');
+        
+        const lineArray = dmp.diff_linesToChars_(lineText1, lineText2);
+        diffs = dmp.diff_main(lineArray.chars1, lineArray.chars2, false);
+        dmp.diff_charsToLines_(diffs, lineArray.lineArray);
         dmp.diff_cleanupSemantic(diffs);
+        
+        // 구분자를 다시 제거
+        diffs = diffs.map(([op, text]) => [op, text.replace(/\u0001/g, '')]);
         break;
       case 'character':
       default:

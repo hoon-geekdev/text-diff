@@ -2,14 +2,18 @@
 
 import React from 'react';
 import type { DiffResult } from '../types/diff';
+import type { ComparisonMode } from '../types/diff';
+import ComparisonModeSelector from './ComparisonModeSelector';
 
 interface DiffViewerProps {
   diffs: DiffResult[];
   title: string;
   className?: string;
+  comparisonMode: ComparisonMode;
+  onModeChange: (mode: ComparisonMode) => void;
 }
 
-export default function DiffViewer({ diffs, title, className = '' }: DiffViewerProps) {
+export default function DiffViewer({ diffs, title, className = '', comparisonMode, onModeChange }: DiffViewerProps) {
   if (!diffs.length) {
     return (
       <div className={`min-h-[300px] flex items-center justify-center text-gray-500 dark:text-gray-400 ${className}`}>
@@ -24,8 +28,8 @@ export default function DiffViewer({ diffs, title, className = '' }: DiffViewerP
   const renderDiffSegment = (diff: DiffResult, index: number) => {
     const { operation, text } = diff;
     
-    // 공백 문자 처리 (탭, 줄바꿈 등)
-    const preservedText = text.replace(/\n/g, '\n').replace(/\t/g, '\t');
+    // 줄바꿈과 공백 문자를 올바르게 처리
+    const preservedText = text;
 
     switch (operation) {
       case 'insert':
@@ -70,8 +74,15 @@ export default function DiffViewer({ diffs, title, className = '' }: DiffViewerP
 
   return (
     <div className={`${className}`}>
-      <div className="mb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
         <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">{title}</h3>
+        <div className="flex-shrink-0">
+          <ComparisonModeSelector
+            currentMode={comparisonMode}
+            onModeChange={onModeChange}
+            className="text-xs"
+          />
+        </div>
       </div>
       <div 
         className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 min-h-[300px] whitespace-pre-wrap font-mono text-sm leading-relaxed"

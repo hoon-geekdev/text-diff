@@ -3,7 +3,6 @@
 import Container from '../components/ui/Container';
 import TextInputArea from '../components/TextInputArea';
 import DiffViewer from '../components/DiffViewer';
-import ComparisonModeSelector from '../components/ComparisonModeSelector';
 import { useDiffContext } from '../context/DiffContext';
 
 export default function Home() {
@@ -56,25 +55,14 @@ export default function Home() {
 
         {/* Diff Results */}
         {(originalText || modifiedText) && !error && (
-          <div className="space-y-4">
-            {/* Comparison Mode Selector Above Results */}
-            <div className="flex justify-center">
-              <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm p-4">
-                <ComparisonModeSelector
-                  currentMode={comparisonMode}
-                  onModeChange={setComparisonMode}
-                />
-              </div>
-            </div>
-            
-            {/* Diff Viewer */}
-            <div className="max-w-6xl mx-auto">
-              <DiffViewer 
-                diffs={diffs} 
-                title="비교 결과" 
-                className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm p-6"
-              />
-            </div>
+          <div className="max-w-6xl mx-auto">
+            <DiffViewer 
+              diffs={diffs} 
+              title="비교 결과" 
+              className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm p-6"
+              comparisonMode={comparisonMode}
+              onModeChange={setComparisonMode}
+            />
           </div>
         )}
 
