@@ -3,6 +3,16 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Diff highlighting colors */
+  --diff-added: #d4f5d4;
+  --diff-removed: #fdd8d8;
+  --diff-added-text: #166534;
+  --diff-removed-text: #991b1b;
+  --diff-added-dark: #166534;
+  --diff-removed-dark: #991b1b;
+  --diff-added-bg-dark: #0f2f0f;
+  --diff-removed-bg-dark: #2f0f0f;
 }
 
 @theme inline {
@@ -10,12 +20,24 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Diff colors */
+  --color-diff-added: var(--diff-added);
+  --color-diff-removed: var(--diff-removed);
+  --color-diff-added-text: var(--diff-added-text);
+  --color-diff-removed-text: var(--diff-removed-text);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    
+    /* Dark mode diff colors */
+    --diff-added: var(--diff-added-bg-dark);
+    --diff-removed: var(--diff-removed-bg-dark);
+    --diff-added-text: var(--diff-added-dark);
+    --diff-removed-text: var(--diff-removed-dark);
   }
 }
 
