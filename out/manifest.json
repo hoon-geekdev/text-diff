@@ -1,1 +1,0 @@
-{"name":"TextDiff Viewer","short_name":"TextDiff","description":"실시간 텍스트 비교 도구","start_url":"/text-diff/","display":"standalone","background_color":"#ffffff","theme_color":"#3b82f6","icons":[{"src":"/text-diff/favicon.ico","sizes":"16x16","type":"image/x-icon"}]}
